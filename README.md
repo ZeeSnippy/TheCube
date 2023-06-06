@@ -1,1 +1,1 @@
-# TheCube
+# The Cube
