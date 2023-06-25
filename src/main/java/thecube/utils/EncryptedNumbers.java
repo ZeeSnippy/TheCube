@@ -35,7 +35,7 @@ public class EncryptedNumbers {
 
     public EncryptedNumbers() {
         this.PRIME_NUMBERS = getAllPrimeNumber(1000);
-        createListForEncryptedNumbers();
+      //  createListForEncryptedNumbers();
         completeListForEncryptedNumbers();
     }
 
@@ -43,7 +43,8 @@ public class EncryptedNumbers {
         int sizeRepeat = 2029;
         while (list.size() < sizeRepeat) {
             for (int i = 1; i < 1000; i++) {
-                if (!isPrimeNumber(i) && getSumDigitsInNumber(i) == limit) {
+           //    if (!isPrimeNumber(i) && getSumDigitsInNumber(i) == limit) {
+                if (getSumDigitsInNumber(i) == limit) {
                     if (list.size() < sizeRepeat)
                         list.add(i);
                     else
