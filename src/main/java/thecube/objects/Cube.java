@@ -121,7 +121,8 @@ public class Cube {
 
         return "Всего комнат = " + THE_CUBE.size() +
                 "\nБезопасных комнат = " + save +
-                "\nКомнат с ловушками = " + trap;
+                "\nКомнат с ловушками = " + trap +
+                "\n*Сила простых*, 'Простое'\n";
     }
 
     private ArrayList<Room> buildCube() {

@@ -49,9 +49,9 @@ public class Room {
     private String getStringHint(int number) {
         StringBuilder hint = new StringBuilder();
         if (isPrimeNumber(number)) {
-            hint.append("'").append(number).append("'");
+            hint.append("'").append(getCode(number)).append("'");
         } else if (aNumberHasThePowerOfPrimes(number))
-            hint.append("*").append(number).append("*");
+            hint.append("*").append(getCode(number)).append("*");
         else
             hint.append(number);
         return hint.toString();
@@ -200,14 +200,12 @@ public class Room {
             else {
                 return
                         "[" + getColor() +
-                                "] Номер комнаты = " + getTreeDigits(getEncrypted()) +
+                                "] Номер комнаты = " + getHintedCoordinates() +
                                 " Текущее положение = " + getDescartes() +
                                 " Изначальное положение = [" +
                                 getSumDigitsInNumber(getEncrypted().get(0)) + ", " +
                                 getSumDigitsInNumber(getEncrypted().get(1)) + ", " +
-                                getSumDigitsInNumber(getEncrypted().get(2)) + "] " +
-                                getHintedCoordinates() +
-                                " | Save:" + isSave() + " -> (Prime:" + isPrime() + "|Power:" + isPowerPrime() + ")";
+                                getSumDigitsInNumber(getEncrypted().get(2)) + "] ";
             }
         } catch (NullPointerException ex) {
             return "Null";
