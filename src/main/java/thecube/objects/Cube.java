@@ -3,14 +3,16 @@ package thecube.objects;
 import thecube.utils.EncryptedNumbers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class Cube {
     private final ArrayList<Room> THE_CUBE;
     private final EncryptedNumbers numbers = new EncryptedNumbers();
 
-    private Room bridge = new Room(27, 13, 14, numbers);
-    private final Room exit = new Room(28, 13, 14, numbers);
+    private Room bridge = new Room(13, 14, 27, numbers, "Синий");
+    private final Room exit = new Room(13, 14, 28, numbers, "Белый");
 
     private int roundForRoom = 0;
 
@@ -128,12 +130,19 @@ public class Cube {
         for (int x = 1; x <= SIZE_CUBE; x++) {
             for (int y = 1; y <= SIZE_CUBE; y++) {
                 for (int z = 1; z <= SIZE_CUBE; z++) {
-                    cube.add(new Room(x, y, z, numbers));
+                    cube.add(new Room(x, y, z, numbers, getRandomColor()));
                 }
             }
         }
         cube.add(bridge);
         return cube;
+    }
+
+    private String getRandomColor() {
+        Random rnd = new Random();
+        List<String> colors = new ArrayList<>(Arrays.asList("Красный", "Зеленый", "Желтый", "Синий", "Белый", "Оранжевый"));
+        int index = rnd.nextInt(colors.size());
+        return colors.get(index);
     }
 
     public Room getBridge() {

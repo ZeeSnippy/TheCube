@@ -12,24 +12,49 @@ public class Room {
     private ArrayList<Integer> descartes = new ArrayList<>();
     private final ArrayList<Integer> encrypted = new ArrayList<>();
     private final EncryptedNumbers numbers;
+
+    private final String color;
     private final boolean isPowerPrime;
     private final boolean isPrime;
     private final boolean isSave;
     public final Trap trap;
+    private final String hintedCoordinates;
 
 
-    public Room(int x, int y, int z, EncryptedNumbers numbers) {
+    public Room(int x, int y, int z, EncryptedNumbers numbers, String color) {
+
         this.descartes.add(x);
         this.descartes.add(y);
         this.descartes.add(z);
         this.numbers = numbers;
-        this.encrypted.add(getValue(x));
-        this.encrypted.add(getValue(y));
-        this.encrypted.add(getValue(z));
-        this.isPowerPrime = ((aNumberHasThePowerOfPrimes(x)) || (aNumberHasThePowerOfPrimes(y)) || (aNumberHasThePowerOfPrimes(z)));
-        this.isPrime = ((isPrimeNumber(x)) || (isPrimeNumber(y)) || (isPrimeNumber(z)));
+        int xEnc = getValue(x), yEnc = getValue(y), zEnc = getValue(z);
+        this.encrypted.add(xEnc);
+        this.encrypted.add(yEnc);
+        this.encrypted.add(zEnc);
+        this.isPowerPrime = ((aNumberHasThePowerOfPrimes(xEnc)) || (aNumberHasThePowerOfPrimes(yEnc)) || (aNumberHasThePowerOfPrimes(zEnc)));
+        this.isPrime = ((isPrimeNumber(xEnc)) || (isPrimeNumber(yEnc)) || (isPrimeNumber(zEnc)));
         this.isSave = analyzeSave();
         this.trap = new Trap(!this.isSave);
+        this.color = color;
+        this.hintedCoordinates = getHinted(xEnc, yEnc, zEnc);
+    }
+
+    private String getHinted(int x, int y, int z) {
+        return "[" +
+                getStringHint(x) + ", " +
+                getStringHint(y) + ", " +
+                getStringHint(z) + "]";
+    }
+
+    private String getStringHint(int number) {
+        StringBuilder hint = new StringBuilder();
+        if (isPrimeNumber(number)) {
+            hint.append("'").append(number).append("'");
+        } else if (aNumberHasThePowerOfPrimes(number))
+            hint.append("*").append(number).append("*");
+        else
+            hint.append(number);
+        return hint.toString();
     }
 
     public void moveRoomToRound(int round) {
@@ -159,15 +184,29 @@ public class Room {
         return trap;
     }
 
+    public String getColor() {
+        return color;
+    }
+
+    public String getHintedCoordinates() {
+        return hintedCoordinates;
+    }
+
     @Override
     public String toString() {
         try {
             if (getDescartes().get(0) == 28 || getDescartes().get(1) == 28 || getDescartes().get(2) == 28)
-                return "EXIT !!!";
+                return "Выход !!!";
             else {
                 return
-                        getDescartes() + ":" +
-                        getTreeDigits(getEncrypted()) +
+                        "[" + getColor() +
+                                "] Номер комнаты = " + getTreeDigits(getEncrypted()) +
+                                " Текущее положение = " + getDescartes() +
+                                " Изначальное положение = [" +
+                                getSumDigitsInNumber(getEncrypted().get(0)) + ", " +
+                                getSumDigitsInNumber(getEncrypted().get(1)) + ", " +
+                                getSumDigitsInNumber(getEncrypted().get(2)) + "] " +
+                                getHintedCoordinates() +
                                 " | Save:" + isSave() + " -> (Prime:" + isPrime() + "|Power:" + isPowerPrime() + ")";
             }
         } catch (NullPointerException ex) {

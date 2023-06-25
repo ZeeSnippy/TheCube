@@ -64,7 +64,8 @@ public class Number {
     public static boolean aNumberHasThePowerOfPrimes(int number) {
         List<Integer> prime = new ArrayList<>(Arrays.asList(2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31));
         int temp;
-        for (int base : prime) {
+        for (int base = 2; base < 32; base++) {
+//        for (int base : prime) {
             for (int degree : prime) {
                 temp = (int) Math.pow(base, degree);
                 if ((int) (Math.log10(temp) + 1) <= 3) {
