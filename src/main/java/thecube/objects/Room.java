@@ -13,7 +13,7 @@ public class Room {
     private final ArrayList<Integer> encrypted = new ArrayList<>();
     private final EncryptedNumbers numbers;
 
-    private final String color;
+    private String color;
     private final boolean isPowerPrime;
     private final boolean isPrime;
     private final boolean isSave;
@@ -186,6 +186,10 @@ public class Room {
 
     public String getColor() {
         return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public String getHintedCoordinates() {

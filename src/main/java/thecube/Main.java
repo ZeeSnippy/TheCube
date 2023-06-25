@@ -19,6 +19,7 @@ public class Main {
 
     public static void main(String[] args) {
         cube.nextRound();
+        currentRoom.setColor("Белый");
         updateInfo();
         Scanner mainMenu;
         int value;
