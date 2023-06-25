@@ -92,29 +92,36 @@ public class Main {
     }
 
     private static void moveTheNextRoom(Room route) {
-        if (route != null) {
-            if (route.isSave())
-                currentRoom = route;
-            else {
-                System.out.println(getMsgInfoTrap(route.getTrap()));
-                Scanner roomScanner = new Scanner(System.in);
-                try {
-                    System.out.println("Войти в комнату с ловушкой: 1");
-                    System.out.println("Вернуться назад: 0");
-                    System.out.print("Что вы делаете? ");
-                    int answer = roomScanner.nextInt();
+        try {
 
-                    if (answer == 1) {
-                        currentRoom = route;
-                        minutes += 10;
+
+            if (route != null) {
+                if (route.isSave())
+                    currentRoom = route;
+                else {
+                    System.out.println(getMsgInfoTrap(route.getTrap()));
+                    Scanner roomScanner = new Scanner(System.in);
+                    try {
+                        System.out.println("Войти в комнату с ловушкой: 1");
+                        System.out.println("Вернуться назад: 0");
+                        System.out.print("Что вы делаете? ");
+                        int answer = roomScanner.nextInt();
+
+                        if (answer == 1) {
+                            currentRoom = route;
+                            minutes += 10;
+                        }
+                    } catch (Exception ignored) {
                     }
-                } catch (Exception ignored) {
                 }
+                inc();
+                updateInfo();
+                System.out.println();
             }
+        } catch (Exception ignored) {
+
         }
-        inc();
-        updateInfo();
-        System.out.println();
+
     }
 
     private static void inc() {
@@ -143,22 +150,46 @@ public class Main {
         } else {
             if (getLeftRoom() != null)
                 leftRoom = getLeftRoom();
-            else if (currentRoom == leftRoom) leftRoom = bridge;
+            else {
+                if (currentRoom.getDescartes().get(0) == 1 || leftRoom.getDescartes().get(0) == 1) {
+                    leftRoom = null;
+                } else if (currentRoom == leftRoom) leftRoom = bridge;
+            }
             if (getRightRoom() != null)
                 rightRoom = getRightRoom();
-            else if (currentRoom == rightRoom) rightRoom = bridge;
+            else {
+                if (currentRoom.getDescartes().get(0) == 26 || rightRoom.getDescartes().get(0) == 26) {
+                    rightRoom = null;
+                } else if (currentRoom == rightRoom) rightRoom = bridge;
+            }
             if (getUpRoom() != null)
                 upRoom = getUpRoom();
-            else if (currentRoom == upRoom) upRoom = bridge;
+            else {
+                if (currentRoom.getDescartes().get(1) == 1 || upRoom.getDescartes().get(1) == 1) {
+                    upRoom = null;
+                } else if (currentRoom == upRoom) upRoom = bridge;
+            }
             if (getDownRoom() != null)
                 downRoom = getDownRoom();
-            else if (currentRoom == downRoom) downRoom = bridge;
+            else {
+                if (currentRoom.getDescartes().get(1) == 26 || downRoom.getDescartes().get(1) == 26) {
+                    downRoom = null;
+                } else if (currentRoom == downRoom) downRoom = bridge;
+            }
             if (getFrontRoom() != null)
                 frontRoom = getFrontRoom();
-            else if (currentRoom == frontRoom) frontRoom = bridge;
+            else {
+                if (currentRoom.getDescartes().get(2) == 1 || frontRoom.getDescartes().get(2) == 1) {
+                    frontRoom = null;
+                } else if (currentRoom == frontRoom) frontRoom = bridge;
+            }
             if (getBackRoom() != null)
                 backRoom = getBackRoom();
-            else if (currentRoom == backRoom) backRoom = bridge;
+            else {
+                if (currentRoom.getDescartes().get(2) == 26 || backRoom.getDescartes().get(2) == 26) {
+                    backRoom = null;
+                } else if (currentRoom == backRoom) backRoom = bridge;
+            }
         }
     }
 
